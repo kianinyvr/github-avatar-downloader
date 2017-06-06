@@ -11,7 +11,20 @@ function getRepoContributors(repoOwner, repoName, cb){
   var requestURL = 'https://'+ GITHUB_USER + ':' + GITHUB_TOKEN + '@api.github.com/repos/' + repoOwner + '/' + repoName + '/contributors';
   console.log(requestURL);
 
+  var options = {
+    url: requestURL,
+    headers: {"User-Agent": "kianinyvr"}
+  };
+
+
+  request(options, (err, results) => {
+
+    let parsedResults = JSON.parse(results.body);
+    console.log(parsedResults);
+  });
+
 };
+
 
 getRepoContributors("jquery", "jquery", function(err, result) {
   console.log("Errors:", err);

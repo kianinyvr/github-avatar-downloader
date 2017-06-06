@@ -7,7 +7,7 @@ console.log("Welcome to the GitHub Avatar Downloader!");
 var GITHUB_USER = "kianinyvr";
 var GITHUB_TOKEN = "46de44438fe534fa85fb3a88f15557cd481be098";
 
-
+var count = 0;
 
 function getRepoContributors(repoOwner, repoName, cb){
   var requestURL = 'https://'+ GITHUB_USER + ':' + GITHUB_TOKEN + '@api.github.com/repos/' + repoOwner + '/' + repoName + '/contributors';
@@ -23,8 +23,9 @@ function getRepoContributors(repoOwner, repoName, cb){
 
     let parsedResults = JSON.parse(results.body);
 
-    parsedResults.forEach((avatarURL) => {
-      console.log("AVATAR URL: ", avatarURL.avatar_url)
+    parsedResults.forEach((user) => {
+      var fileName = "./avatars/" + user.login + ".jpg";
+      downloadImageByURL(user.avatar_url, fileName );
     })
   });
 
@@ -45,7 +46,6 @@ function downloadImageByURL(url, filePath){
           throw err;
          })
          .on('response', function(response){
-          console.log("Response Status Code: ", response.responseCode);
          })
          .pipe(fs.createWriteStream(filePath));
 

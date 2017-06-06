@@ -20,7 +20,10 @@ function getRepoContributors(repoOwner, repoName, cb){
   request(options, (err, results) => {
 
     let parsedResults = JSON.parse(results.body);
-    console.log(parsedResults);
+
+    parsedResults.forEach((avatarURL) => {
+      console.log("AVATAR URL: ", avatarURL.avatar_url)
+    })
   });
 
 };
